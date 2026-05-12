@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <!-- Mateusz Szostak 1B 16 lo kraków -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Mateusz Szostak">
@@ -9,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Mateusz Szostak 1B 16 lo kraków -->
     <style>
         :root {
             --bg: #dedad5;
@@ -33,6 +33,11 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -198,9 +203,78 @@
         .block-option.active { background: var(--accent-muted); color: #fff; }
 
         @media (max-width: 900px) {
-            .grid-asym { grid-template-columns: 1fr; gap: 40px; }
+            .grid-asym { grid-template-columns: 1fr; gap: 36px; }
             h1 { font-size: 56px; }
+            h2 { font-size: 34px; }
+            section { padding: 90px 0; }
             .container { padding: 0 20px; }
+            p { max-width: 68ch; }
+            .canvas-frame { height: clamp(360px, 52vh, 600px); }
+            .carousel {
+                max-width: 520px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 40px; margin-bottom: 18px; line-height: 0.95; }
+            h2 { font-size: 26px; margin-bottom: 16px; }
+            section { padding: 70px 0; }
+
+            .container {
+                padding: 0 16px;
+                border-left: none;
+                border-right: none;
+            }
+
+            .grid-asym { gap: 22px; }
+
+            p {
+                max-width: 100%;
+                font-size: 15px;
+                line-height: 1.55;
+            }
+
+            ol, li {
+                max-width: 100%;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+            ol {
+                padding-left: 14px !important;
+                font-size: 12.5px !important;
+                line-height: 1.8 !important;
+            }
+
+            .carousel {
+                float: none !important;
+                margin: 16px 0 24px 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-left: none;
+                border-right: none;
+            }
+
+            .carousel-caption { font-size: 12px; padding: 12px 14px; }
+            .carousel-caption strong { font-size: 13px; }
+
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
+            .canvas-frame {
+                height: clamp(280px, 44vh, 520px) !important;
+            }
+
+            .canvas-frame[style*="height"] {
+                height: clamp(260px, 38vh, 380px) !important;
+            }
+
+            .visualization-controls button {
+                padding: 10px 14px;
+                font-size: 11px;
+            }
         }
 
         .term-def {
@@ -908,18 +982,26 @@
         }
 
         let drag=false, sx, sy;
-        mainC.addEventListener('mousedown', e => { drag=true; sx=e.clientX; sy=e.clientY; mainC.style.cursor='grabbing'; });
-        window.addEventListener('mouseup', () => { drag=false; mainC.style.cursor='default'; });
-        mainC.addEventListener('mousemove', e => {
+        function updateMouseReadout(clientX, clientY) {
             const rect = mainC.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
             const re = ((x - width/2) / state.zoom + state.cx).toFixed(6);
             const im = ((y - height/2) / state.zoom + state.cy).toFixed(6);
             document.getElementById('mouseRe').innerText = re;
             document.getElementById('mouseIm').innerText = im;
-            
+        }
+
+        mainC.addEventListener('mousedown', e => {
+            drag=true; sx=e.clientX; sy=e.clientY; mainC.style.cursor='grabbing';
+        });
+        window.addEventListener('mouseup', () => {
+            drag=false; mainC.style.cursor='default';
+        });
+        mainC.addEventListener('mousemove', e => {
+            updateMouseReadout(e.clientX, e.clientY);
+
             if(drag) {
                 state.cx -= (e.clientX-sx)/state.zoom;
                 state.cy -= (e.clientY-sy)/state.zoom;
@@ -928,7 +1010,42 @@
                 updateMain();
             }
         });
-        mainC.addEventListener('wheel', e => { e.preventDefault(); state.zoom *= (e.deltaY>0 ? 0.9 : 1.1); updateMain(); }, {passive:false});
+        mainC.addEventListener('wheel', e => {
+            e.preventDefault();
+            state.zoom *= (e.deltaY>0 ? 0.9 : 1.1);
+            updateMain();
+        }, {passive:false});
+
+        mainC.addEventListener('touchstart', (e) => {
+            if (!e.touches || e.touches.length !== 1) return;
+            const t = e.touches[0];
+            drag = true;
+            sx = t.clientX;
+            sy = t.clientY;
+            mainC.style.cursor = 'grabbing';
+        }, { passive: true });
+
+        mainC.addEventListener('touchmove', (e) => {
+            if (!drag) return;
+            if (!e.touches || e.touches.length !== 1) return;
+
+            const t = e.touches[0];
+            updateMouseReadout(t.clientX, t.clientY);
+
+            state.cx -= (t.clientX - sx) / state.zoom;
+            state.cy -= (t.clientY - sy) / state.zoom;
+
+            sx = t.clientX;
+            sy = t.clientY;
+            updateMain();
+
+            e.preventDefault();
+        }, { passive: false });
+
+        mainC.addEventListener('touchend', () => {
+            drag = false;
+            mainC.style.cursor = 'default';
+        });
 
         window.resetView = () => { state.cx=-0.5; state.cy=0; state.zoom=300; updateMain(); }
         window.cyclePalette = () => { state.palette = (state.palette+1)%5; genPalette(state.palette); document.getElementById('styleName').innerText = paletteNames[state.palette]; updateMain(); updateBuild(); }
@@ -1217,5 +1334,3 @@
 
 </body>
 </html>
-
-    <!-- Mateusz Szostak 1B 16 lo kraków -->
