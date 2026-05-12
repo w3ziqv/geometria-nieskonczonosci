@@ -1,26 +1,36 @@
-# 🌀 Geometria Nieskończoności – Interaktywna Strona Edukacyjna
+# Zbiór Mandelbrota – Piękno Fraktali 🌀
 
-Projekt edukacyjny stworzony przez **Mateusza Szostaka**, prezentujący świat fraktali — ze szczególnym naciskiem na **Zbiór Mandelbrota** i **Zbiory Julii**.
+To repozytorium zawiera projekt edukacyjny poświęcony geometrii fraktalnej, ze szczególnym uwzględnieniem zbioru Mandelbrota. Strona pozwala samodzielnie eksplorować i zrozumieć nieskończone, samopodobne struktury matematyczne.
 
-## 📖 O projekcie
+🏆 **Projekt zdobył Nagrodę II stopnia w ogólnopolskim konkursie "Zobaczyć Matematykę" organizowanym przez AGH!**
 
-Celem projektu jest pokazanie, że matematyka to nie tylko teoria z zeszytu — można ją zobaczyć i samodzielnie zbadać. Strona w przystępny sposób tłumaczy czym są fraktale, skąd pochodzą i gdzie można je spotkać w codziennym życiu.
+🔗 **[Zobacz stronę na żywo (Live Demo)](https://geometria-nieskonczonosci.vercel.app/)**
 
-## ✨ Zawartość strony
+## 🌟 Główne funkcje
+- **Wprowadzenie do fraktali:** Przystępne wyjaśnienie teorii, liczb zespolonych oraz historii Benoîta Mandelbrota.
+- **Interaktywny generator (Canvas):** Możliwość zmiany wartości stałej `C` oraz wykładnika potęgi (od 2 do 5) w celu obserwacji, jak zmieniają się zbiory Julii.
+- **Optymalizacja wydajności:** Wykorzystanie czystego JavaScriptu do obliczania iteracji dla każdego piksela bezpośrednio w przeglądarce.
 
-- **Wstęp do fraktali** — czym są, gdzie występują w naturze (paproć, płatek śniegu, kalafior romanesco) i jakie mają praktyczne zastosowania (grafika komputerowa, kompresja zdjęć, anteny w smartfonach, medycyna)
-- **Historia i biografia Benoîta Mandelbrota** (1924–2010) — odkrywcy geometrii fraktalnej, urodzonego w Warszawie
-- **Matematyka fraktali** — wyjaśnienie liczb zespolonych, iteracji i wzoru zbioru Mandelbrota
-- **Zbiór Mandelbrota vs Zbiory Julii** — porównanie obu zbiorów i ich wzajemna zależność
-- **Interaktywny eksplorator fraktali** — możliwość samodzielnego eksperymentowania z wykładnikiem [2,3,4,5] i wartością stałej C
+## 🚀 Technologie
+- **HTML5** – semantyczna struktura treści
+- **CSS3** – stylizacja i responsywność (RWD)
+- **Vanilla JavaScript** – logika matematyczna i renderowanie grafiki przy użyciu API `<canvas>`
+- **Vercel** – automatyczny hosting i CI/CD
 
-## 🛠️ Technologie
+## 💻 Jak uruchomić projekt lokalnie?
+Projekt został napisany w "czystym" kodzie bez użycia menedżerów pakietów czy frameworków, dlatego jego uruchomienie jest bardzo proste:
 
-- **HTML5** — struktura strony
-- **CSS3** — stylowanie i layout
-- **JavaScript** — interaktywny renderer fraktali (Canvas API)
+1. Pobierz pliki na swój dysk (lub sklonuj repozytorium):
+   ```bash
+   git clone https://github.com/w3ziqv/NAZWA_REPOZYTORIUM.git
+   ```
+2. Otwórz plik `index.html` w dowolnej przeglądarce internetowej.
 
-## 👤 Autor
+*(Opcjonalnie: Jeśli używasz Visual Studio Code, polecam uruchomić stronę przez rozszerzenie "Live Server", aby szybciej widzieć zmiany w kodzie).*
 
-**Mateusz Szostak**  
-Projekt szkolny z matematyki
+## 👨‍💻 Autor
+**Mateusz Szostak**
+- GitHub: [@w3ziqv](https://github.com/w3ziqv)
+
+## 📄 Licencja
+Projekt udostępniony na licencji MIT. Kod ma charakter edukacyjny – zachęcam do analizowania algorytmu i własnych eksperymentów z generowaniem fraktali!
