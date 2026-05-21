@@ -22,7 +22,7 @@ Projekt został napisany w "czystym" kodzie bez użycia menedżerów pakietów c
 
 1. Pobierz pliki na swój dysk (lub sklonuj repozytorium):
    ```bash
-   git clone https://github.com/w3ziqv/NAZWA_REPOZYTORIUM.git
+   git clone https://github.com/w3ziqv/geometria-nieskonczonosci.git
    ```
 2. Otwórz plik `index.html` w dowolnej przeglądarce internetowej.
 
